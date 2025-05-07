@@ -2,68 +2,50 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Invitación</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Generador de Gráficas</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-
-  <!-- Música de fondo -->
-  <audio id="bg-music" loop>
-    <source src="Abejita.mp3" type="audio/mpeg">
-    Tu navegador no soporta el elemento de audio.
-  </audio>
-
-  <div class="book">
-
-    <div class="page" id="page3">
-      <div class="page-content">
-
-        <button onclick="nextPage()">Abrir.</button>
-      </div>
-    </div>
-
-    <div class="page" id="page1">
-      <div class="page-content">
-        <h1>¡Con cariño, para ti!</h1>
-        <p>Celebramos este día especial contigo</p>
-        <p> en pensamiento y corazón.</p>
-        <button onclick="nextPage()">Siguiente</button>
-      </div>
-    </div>
-
+  <div class="container">
+    <h1>Generador de Gráficas</h1>
     
+    <div id="step1">
+      <label for="chartTitle">Nombre de la tabla:</label>
+      <input type="text" id="chartTitle" placeholder="Ej: Ventas Mensuales" />
+      
+      <label for="chartType">Tipo de gráfica:</label>
+      <select id="chartType">
+        <option value="bar">Barras verticales</option>
+        <option value="pictogram">Barras horizontales</option>
+        <option value="pie">Pastel</option>
+      </select>
 
-    <div class="page" id="page2">
-      <h1>Detalles del Evento</h1>
-      <p>📅 Fecha: 31 de mayo<br>⏰ Hora: 3:00pm<br>📍 Lugar: Salón multiuso Residencial Altos de la Colombia.</p>
-
-
-      <!-- Botones de navegación -->
-      <div class="button-row">
-        <button onclick="prevPage()">Anterior</button>
-        <button onclick="nextPage()">Siguiente</button>
-      </div>
+      <button onclick="goToStep2()">Siguiente</button>
     </div>
 
+    <div id="step2" style="display: none;">
+      <h2 id="chartTitleDisplay"></h2>
 
+      <label for="dataName">Nombre del dato:</label>
+      <input type="text" id="dataName" placeholder="Ej: Enero" />
 
-    <!-- NUEVA Página 4 -->
-    <div class="page" id="page4">
-      <br><br>
-      <h1>Lista de regalos<br></h1>
-      <p>Tu cariño es el mejor regalo para nosotros, si deseas tener un detalle con la princesa lo recibiremos con el corazón ♥</p>
-      <p>La lista virtual está en <span style="color: rgb(55, 25, 228);">AMAZON</span>.</p>
-      <div class="button-center">
-        <a href="https://www.amazon.com/baby-reg/marialbis-gonzlez-mayo-2025-santodomingo/2K7YNHJ6FPD7W" target="_blank" class="button-link">
-          Amazon
-        </a>
-      </div>
-      <button onclick="prevPage()">Anterior</button>
+      <label for="dataValue">Valor:</label>
+      <input type="number" id="dataValue" />
+
+      <label for="dataValue">Fecha:</label>
+      <input type="text" id="dataDate" placeholder="Ej: Abril 2025 o 01-04-2025" />
+
+      <button onclick="addData()">Agregar dato</button>
+      <button onclick="generateChart()">Generar gráfica</button>
+      <button onclick="restart()">Volver a empezar</button>
+
+      <div id="dataList"></div>
+      <canvas id="chartCanvas"></canvas>
     </div>
-
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

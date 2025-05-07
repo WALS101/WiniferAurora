@@ -1,44 +1,74 @@
-let currentPage = 0;
-const pages = document.querySelectorAll('.page');
-const music = document.getElementById('bg-music');
-let musicStarted = false;
+let chartData = [];
+let chartInstance = null;
 
-function showPage(index) {
-  pages.forEach((page, i) => {
-    page.classList.remove('active');
-    if (i === index) {
-      page.classList.add('active');
+function goToStep2() {
+  const title = document.getElementById("chartTitle").value;
+  if (!title) return alert("Por favor ingresa un nombre para la tabla.");
+  document.getElementById("chartTitleDisplay").innerText = title;
+  document.getElementById("step1").style.display = "none";
+  document.getElementById("step2").style.display = "block";
+}
+
+function addData() {
+  const name = document.getElementById("dataName").value;
+  const value = parseFloat(document.getElementById("dataValue").value);
+  const date = document.getElementById("dataDate").value;
+
+  if (!name || isNaN(value) || !date) {
+    return alert("Por favor completa todos los campos.");
+  }
+
+  chartData.push({ name, value, date });
+  document.getElementById("dataList").innerText = JSON.stringify(chartData, null, 2);
+  
+   document.getElementById("dataName").value = "";
+  document.getElementById("dataValue").value = "";
+  document.getElementById("dataDate").value = "";
+}
+
+function generateChart() {
+  const chartType = document.getElementById("chartType").value;
+  const ctx = document.getElementById("chartCanvas").getContext("2d");
+
+  const labels = chartData.map(item => item.name + " (" + item.date + ")");
+  const values = chartData.map(item => item.value);
+
+  if (chartInstance) chartInstance.destroy();
+
+  const colors = [
+    '#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#2ecc71', '#f39c12', '#1abc9c', '#8e44ad'
+  ];
+
+  let type = chartType === 'pictogram' ? 'bar' : chartType;
+  const isHorizontal = chartType === 'pictogram';
+
+  chartInstance = new Chart(ctx, {
+    type: type,
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Datos',
+        data: values,
+        backgroundColor: chartType === 'pie' ? colors : colors.slice(0, values.length)
+      }]
+    },
+    options: {
+      indexAxis: isHorizontal ? 'y' : 'x', 
+      plugins: {
+        legend: {
+          display: chartType !== 'bar' || isHorizontal 
+        }
+      },
+      responsive: true
     }
   });
-  currentPage = index;
 }
 
-function nextPage() {
-  // Inicia la música solo al salir de la primera página
-  if (currentPage === 0 && !musicStarted) {
-    music.play().then(() => {
-      musicStarted = true;
-    }).catch((err) => {
-      console.log("Autoplay bloqueado. Esperando interacción del usuario.");
-    });
-  }
-
-  if (currentPage < pages.length - 1) {
-    showPage(currentPage + 1);
-  }
+function restart() {
+  chartData = [];
+  if (chartInstance) chartInstance.destroy();
+  document.getElementById("chartTitle").value = "";
+  document.getElementById("dataList").innerText = "";
+  document.getElementById("step1").style.display = "block";
+  document.getElementById("step2").style.display = "none";
 }
-
-function prevPage() {
-  if (currentPage > 0) {
-    showPage(currentPage - 1);
-  }
-}
-
-function goToPage(index) {
-  if (index >= 0 && index < pages.length) {
-    showPage(index);
-  }
-}
-
-// Mostrar la primera página al cargar
-showPage(currentPage);
