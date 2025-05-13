@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invitación</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Música de fondo -->
+  <audio id="bg-music" loop>
+    <source src="Abejita.mp3" type="audio/mpeg">
+    Tu navegador no soporta el elemento de audio.
+  </audio>
+
+  <div class="book">
+
+    <div class="page" id="page3">
+      <div class="page-content">
+
+        <button onclick="nextPage()">Abrir.</button>
+      </div>
+    </div>
+
+    <div class="page" id="page1">
+      <div class="page-content">
+        <h1>¡Con cariño, para ti!</h1>
+        <p>Celebramos este día especial contigo</p>
+        <p> en pensamiento y corazón.</p>
+        <button onclick="nextPage()">Siguiente</button>
+      </div>
+    </div>
+
+    
+
+    <div class="page" id="page2">
+      <h1>Detalles del Evento</h1>
+      <p>📅 Fecha: 31 de mayo<br>⏰ Hora: 3:00pm<br>📍 Lugar: Salón multiuso Residencial Altos de la Colombia.</p>
+
+
+      <!-- Botones de navegación -->
+      <div class="button-row">
+        <button onclick="prevPage()">Anterior</button>
+        <button onclick="nextPage()">Siguiente</button>
+      </div>
+    </div>
+
+
+
+    <!-- NUEVA Página 4 -->
+    <div class="page" id="page4">
+      <br><br>
+      <h1>Lista de regalos<br></h1>
+      <p>Tu cariño es el mejor regalo para nosotros, si deseas tener un detalle con la princesa lo recibiremos con el corazón ♥</p>
+      <p>La lista virtual está en <span style="color: rgb(55, 25, 228);">AMAZON</span>.</p>
+      <div class="button-center">
+        <a href="https://www.amazon.com/baby-reg/marialbis-gonzlez-mayo-2025-santodomingo/2K7YNHJ6FPD7W" target="_blank" class="button-link">
+          Amazon
+        </a>
+      </div>
+      <button onclick="prevPage()">Anterior</button>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
